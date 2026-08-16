@@ -192,7 +192,7 @@ end
 
 function BH:_startFeatures()
 	if self.Modules.Farm and self.Config.Features.AutoFarm.Enabled then
-		self.Modules.Farm.Config = self.Config.Features.AutoFarm
+		for k, v in pairs(self.Config.Features.AutoFarm) do self.Modules.Farm.Config[k] = v end
 		pcall(function() self.Modules.Farm:Start() end)
 	end
 

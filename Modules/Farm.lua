@@ -108,7 +108,7 @@ function Farm:_findTargetMob(api)
 		if mob then return mob end
 	end
 
-	return api:GetClosestEnemy(self.Config.AttackRange * 4)
+	return api:GetClosestEnemy((self.Config.AttackRange or 35) * 4)
 end
 
 function Farm:_moveToTarget(mob)
@@ -119,10 +119,10 @@ function Farm:_moveToTarget(mob)
 	if not playerRoot then return end
 
 	local distance = (playerRoot.Position - mobRoot.Position).magnitude
-	if distance <= self.Config.MinDistance then return end
+	if distance <= (self.Config.MinDistance or 3) then return end
 
-	local targetPos = mobRoot.Position + Vector3.new(0, self.Config.MinDistance + 3, 0)
-	local tweenInfo = TweenInfo.new(distance / self.Config.TweenSpeed, Enum.EasingStyle.Linear)
+	local targetPos = mobRoot.Position + Vector3.new(0, (self.Config.MinDistance or 3) + 3, 0)
+	local tweenInfo = TweenInfo.new(distance / (self.Config.TweenSpeed or 256), Enum.EasingStyle.Linear)
 	local tween = TweenService:Create(playerRoot, tweenInfo, {CFrame = CFrame.new(targetPos)})
 	tween:Play()
 	self._currentTween = tween
@@ -149,7 +149,7 @@ function Farm:BringMobsToPlayer(mob)
 	if not playerRoot then return end
 
 	local distance = (playerRoot.Position - mobRoot.Position).magnitude
-	if distance > self.Config.AttackRange or distance < 3 then return end
+	if distance > (self.Config.AttackRange or 35) or distance < 3 then return end
 
 	local humanoid = mob:FindFirstChildOfClass("Humanoid")
 	if not humanoid or humanoid.Health <= 0 then return end
