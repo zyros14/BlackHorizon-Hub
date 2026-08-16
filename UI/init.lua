@@ -451,7 +451,7 @@ function UI:_buildFarmTab(parent)
 	self:_createToggle(s1, "Auto Farm", self.Hub.Config.Features.AutoFarm.Enabled, function(state)
 		self.Hub.Config.Features.AutoFarm.Enabled = state
 		if state and self.Hub.Modules and self.Hub.Modules.Farm then
-			self.Hub.Modules.Farm.Config = self.Hub.Config.Features.AutoFarm
+			for k, v in pairs(self.Hub.Config.Features.AutoFarm) do self.Hub.Modules.Farm.Config[k] = v end
 			self.Hub.Modules.Farm:Start()
 		elseif self.Hub.Modules and self.Hub.Modules.Farm then
 			self.Hub.Modules.Farm:Stop()
@@ -515,7 +515,7 @@ function UI:_buildRaidTab(parent)
 	self:_createToggle(s, "Enable Auto Raid", self.Hub.Config.Features.AutoRaid.Enabled, function(state)
 		self.Hub.Config.Features.AutoRaid.Enabled = state
 		if state and self.Hub.Modules and self.Hub.Modules.Raid then
-			self.Hub.Modules.Raid.Config = self.Hub.Config.Features.AutoRaid
+			for k, v in pairs(self.Hub.Config.Features.AutoRaid) do self.Hub.Modules.Raid.Config[k] = v end
 			self.Hub.Modules.Raid:Start()
 		elseif self.Hub.Modules and self.Hub.Modules.Raid then
 			self.Hub.Modules.Raid:Stop()
@@ -534,7 +534,7 @@ function UI:_buildChestTab(parent)
 	self:_createToggle(s, "Enable Auto Chest", self.Hub.Config.Features.AutoChest.Enabled, function(state)
 		self.Hub.Config.Features.AutoChest.Enabled = state
 		if state and self.Hub.Modules and self.Hub.Modules.Chest then
-			self.Hub.Modules.Chest.Config = self.Hub.Config.Features.AutoChest
+			for k, v in pairs(self.Hub.Config.Features.AutoChest) do self.Hub.Modules.Chest.Config[k] = v end
 			self.Hub.Modules.Chest:Start()
 		elseif self.Hub.Modules and self.Hub.Modules.Chest then
 			self.Hub.Modules.Chest:Stop()
