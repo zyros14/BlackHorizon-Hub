@@ -55,6 +55,12 @@ function Farm:Stop()
 end
 
 function Farm:_runFarmLoop()
+	pcall(function()
+		self:_runFarmLoopSafe()
+	end)
+end
+
+function Farm:_runFarmLoopSafe()
 	if not self.Config.Enabled or not self.State.Active then return end
 
 	local api = getGameAPI()

@@ -56,11 +56,17 @@ function Raid:Stop()
 end
 
 function Raid:_runRaidLoop()
+	pcall(function()
+		self:_runRaidLoopSafe()
+	end)
+end
+
+function Raid:_runRaidLoopSafe()
 	if not self.Config.Enabled or not self.State.Active then return end
 
 	local tickNow = tick()
-	if tickNow - self.LastRaidCheck < self.Config.Intervale then return end
-	self.LastRaidCheck = tickNow
+	if tickNow - (self.State.LastRaidCheck or 0) < (self.Config.Intervale or 5) then return end
+	self.State.LastRaidCheck = tickNow
 
 	local api = getGameAPI()
 	if not api then return end

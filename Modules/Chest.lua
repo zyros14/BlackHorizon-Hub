@@ -42,6 +42,12 @@ function Chest:Stop()
 end
 
 function Chest:_runChestLoop()
+	pcall(function()
+		self:_runChestLoopSafe()
+	end)
+end
+
+function Chest:_runChestLoopSafe()
 	if not self.Config.Enabled or not self.State.Active then return end
 
 	local api = getGameAPI()
