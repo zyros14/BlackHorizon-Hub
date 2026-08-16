@@ -86,30 +86,31 @@ function UI:_buildWindow()
 	dragButton.Text = ""
 	dragButton.Parent = topBar
 
-	self._dragging = false
-	self._dragInputStart = nil
-	self._startPos = nil
+	-- Draggable window (works on all executors: uses GetMouseLocation for delta)
+	local dragging = false
+	local dragStartMouse, dragStartGui = nil, nil
 
 	dragButton.MouseButton1Down:Connect(function()
-		self._dragging = true
-		self._dragInputStart = UserInputService:GetMouseLocation()
-		self._startPos = background.Position
+		dragging = true
+		dragStartMouse = UserInputService:GetMouseLocation()
+		dragStartGui = background.Position
 	end)
 
 	UserInputService.InputEnded:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			self._dragging = false
+			dragging = false
 		end
 	end)
 
 	UserInputService.InputChanged:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseMovement and self._dragging then
-			local delta = input.Position - self._dragInputStart
+		if input.UserInputType == Enum.UserInputType.MouseMovement and dragging and dragStartMouse and dragStartGui then
+			local mousePos = UserInputService:GetMouseLocation()
+			local delta = mousePos - dragStartMouse
 			background.Position = UDim2.new(
-				self._startPos.X.Scale,
-				self._startPos.X.Offset + delta.X,
-				self._startPos.Y.Scale,
-				self._startPos.Y.Offset + delta.Y
+				dragStartGui.X.Scale,
+				dragStartGui.X.Offset + delta.X,
+				dragStartGui.Y.Scale,
+				dragStartGui.Y.Offset + delta.Y
 			)
 		end
 	end)

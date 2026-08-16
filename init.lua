@@ -1,7 +1,7 @@
 local BH = {}
 BH.__index = BH
 
-BH.Version = "v1.0.2"
+BH.Version = "v1.0.3"
 BH.Name = "Black Horizon Hub"
 
 local Players = game:GetService("Players")
